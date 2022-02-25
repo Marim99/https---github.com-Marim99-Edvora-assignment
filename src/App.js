@@ -1,24 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { getUser } from "./RidesAPI";
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import Nav from "./component/Nav";
+import "bootstrap/dist/css/bootstrap.css";
+import Home from "./component/Home";
 function App() {
+  const [user, setUser] = useState([]);
+  useEffect(() => {
+    getUser().then((data) => setUser(data));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Nav user={user} />
+      <Home user={user} />
+    </Router>
   );
 }
 
